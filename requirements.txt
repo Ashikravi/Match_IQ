@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+pdfplumber
+sentence-transformers
+scikit-learn
+sqlalchemy
+pymysql
+python-multipart
+python-dotenv
+pydantic
