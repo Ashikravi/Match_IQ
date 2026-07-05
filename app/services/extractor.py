@@ -29,7 +29,7 @@ def clean_text(text: str) -> str:
      # Remove non-ASCII characters (unicode artifacts from PDFs)
     text = re.sub(r'[^\x00-\x7F]+', ' ', text)
 
-    # Strip leading/trailing whitespace
+
     text = text.strip()
 
     return text
@@ -42,8 +42,7 @@ async def read_upload_file(file: UploadFile) -> bytes:
     """
     return await file.read()
 
-# Common tech skills to look for
-# This list is intentionally broad — covers most JDs you'll see
+# Common tech skills in JD's
 SKILL_KEYWORDS = [
     # Languages
     "python", "javascript", "typescript", "java", "c++", "c#", "go", "rust",
@@ -91,7 +90,7 @@ def extract_section(text: str, section_name: str) -> str:
 
     start = text_upper.find(section_upper)
     if start == -1:
-        return ""  # section not found, return empty string
+        return ""  # section not found return empty string
 
     # Find where the next section starts
     # Look for common section headers after our section

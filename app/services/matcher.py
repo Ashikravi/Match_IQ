@@ -14,7 +14,7 @@ def calculate_match_score(resume_text: str, jd_text: str) -> dict:
     5. Gap analysis
     """
 
-    # --- Full document score ---
+    # Full document score 
     resume_emb = get_embedding(resume_text)
     jd_emb = get_embedding(jd_text)
     full_score = float(cosine_similarity(
@@ -22,7 +22,7 @@ def calculate_match_score(resume_text: str, jd_text: str) -> dict:
         jd_emb.reshape(1, -1)
     )[0][0])
 
-    # --- Skills section score ---
+    #  Skills section score 
     resume_skills_text = extract_section(resume_text, "SKILLS")
     jd_skills_text = extract_section(jd_text, "SKILLS") or jd_text
     # If JD has no skills section, compare against full JD
@@ -37,7 +37,7 @@ def calculate_match_score(resume_text: str, jd_text: str) -> dict:
     else:
         skills_score = full_score  # fallback
 
-    # --- Experience section score ---
+    # Experience section score 
     resume_exp_text = extract_section(resume_text, "EXPERIENCE") \
                    or extract_section(resume_text, "PROJECTS")
     jd_exp_text = extract_section(jd_text, "RESPONSIBILITIES") or jd_text
@@ -52,7 +52,7 @@ def calculate_match_score(resume_text: str, jd_text: str) -> dict:
     else:
         exp_score = full_score  # fallback
 
-    # --- Weighted final score ---
+    #  Weighted final score 
     # Skills weighted higher for freshers
     # Adjust these weights based on role type later
     weighted_score = (
@@ -61,7 +61,7 @@ def calculate_match_score(resume_text: str, jd_text: str) -> dict:
         exp_score    * 0.2
     )
 
-    # --- Gap analysis ---
+    # Gap analysis 
     resume_skills = set(extract_skills(resume_text))
     jd_skills = set(extract_skills(jd_text))
 
