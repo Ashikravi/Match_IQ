@@ -1,5 +1,9 @@
 from fastapi import FastAPI
 from app.routers import match
+from app.db.database import engine, Base
+
+#creates all tables defined in models on startup
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="MatchIQ",
