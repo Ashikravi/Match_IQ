@@ -16,3 +16,12 @@ app.include_router(match.router, prefix="/api/v1", tags=["Match"])
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
+
+@app.get("/")
+def root():
+    return {
+        "app": "MatchIQ",
+        "description": "Semantic resume-JD matching engine",
+        "version": "1.0.0",
+        "docs": "/docs"
+    }
