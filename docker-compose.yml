@@ -1,0 +1,42 @@
+services:
+  app:
+    build: .
+    container_name: matchiq_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=mysql_db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=matchiq_password
+      - DB_NAME=matchiq
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+    networks:
+      - matchiq_network
+
+  mysql_db:
+    image: mysql:8.0
+    container_name: matchiq_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: matchiq_password
+      MYSQL_DATABASE: matchiq
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - matchiq_network
+
+volumes:
+  mysql_data:
+
+networks:
+  matchiq_network:
+    driver: bridge
